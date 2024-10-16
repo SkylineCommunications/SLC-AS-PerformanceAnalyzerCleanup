@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyCopyrightAttribute("© Skyline Communications")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2dbe063bdbca52d2bafc46d880da8f5e80a73696")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+01984d56a2860713b214999c28f57dc6d698a5d2")]
 [assembly: System.Reflection.AssemblyProductAttribute("PerformanceLoggerCleanupScript_1")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PerformanceLoggerCleanupScript_1")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
