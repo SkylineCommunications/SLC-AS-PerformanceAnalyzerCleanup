@@ -51,57 +51,87 @@ DATE		VERSION		AUTHOR			COMMENTS
 
 namespace PerformanceLoggerCleanupScript_1
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Globalization;
-	using System.Text;
-	using Skyline.DataMiner.Automation;
-	
-	/// <summary>
-	/// Represents a DataMiner Automation script.
-	/// </summary>
-	public class Script
-	{
-		/// <summary>
-		/// The script entry point.
-		/// </summary>
-		/// <param name="engine">Link with SLAutomation process.</param>
-		public void Run(IEngine engine)
-		{
-			try
-			{
-				RunSafe(engine);
-			}
-			catch (ScriptAbortException)
-			{
-				// Catch normal abort exceptions (engine.ExitFail or engine.ExitSuccess)
-				throw; // Comment if it should be treated as a normal exit of the script.
-			}
-			catch (ScriptForceAbortException)
-			{
-				// Catch forced abort exceptions, caused via external maintenance messages.
-				throw;
-			}
-			catch (ScriptTimeoutException)
-			{
-				// Catch timeout exceptions for when a script has been running for too long.
-				throw;
-			}
-			catch (InteractiveUserDetachedException)
-			{
-				// Catch a user detaching from the interactive script by closing the window.
-				// Only applicable for interactive scripts, can be removed for non-interactive scripts.
-				throw;
-			}
-			catch (Exception e)
-			{
-				engine.ExitFail("Run|Something went wrong: " + e);
-			}
-		}
+    using System;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.IO;
+    using System.Text;
+    using Skyline.DataMiner.Automation;
 
-		private void RunSafe(IEngine engine)
-		{
-			// TODO: Define code here
-		}
-	}
+    /// <summary>
+    /// Represents a DataMiner Automation script.
+    /// </summary>
+    public class Script
+    {
+        private readonly string folderPath = @"C:\Skyline_Data\PerformanceLogger";
+        private DateTime oldestPerformanceInfoDateTime;
+        private List<string> fileNamesToDelete;
+        private List<string> fileNamesToEdit;
+
+        /// <summary>
+        /// The script entry point.
+        /// </summary>
+        /// <param name="engine">Link with SLAutomation process.</param>
+        public void Run(IEngine engine)
+        {
+            try
+            {
+                RunSafe(engine);
+            }
+            catch (Exception e)
+            {
+                engine.ExitFail("Run|Something went wrong: " + e);
+            }
+        }
+
+        private void RunSafe(IEngine engine)
+        {
+            Initialize(engine);
+
+            if (!Directory.Exists(folderPath))
+                return;
+
+            DetermineFilesToDeleteOrEdit();
+            engine.Log($"Files to delete {String.Join(", ", fileNamesToDelete)}");
+            engine.Log($"Files to modify {String.Join(", ", fileNamesToEdit)}");
+            HandleFilesToEditOrDelete();
+        }
+
+        private void HandleFilesToEditOrDelete()
+        {
+            foreach (string fileName in fileNamesToDelete)
+            {
+                File.Delete(fileName);
+            }
+        }
+
+        private void DetermineFilesToDeleteOrEdit()
+        {
+            string[] files = Directory.GetFiles(folderPath);
+
+            foreach (string file in files)
+            {
+                if (File.GetLastWriteTime(file) < oldestPerformanceInfoDateTime)
+                {
+                    fileNamesToDelete.Add(file);
+                }
+                else if (File.GetCreationTime(file) < oldestPerformanceInfoDateTime)
+                {
+                    fileNamesToEdit.Add(file);
+                }
+                else
+                {
+                    // do nothing
+                }
+            }
+        }
+
+        private void Initialize(IEngine engine)
+        {
+            var inputOfDays = Convert.ToInt32(engine.GetScriptParam("Days of oldest performance info").Value);
+            oldestPerformanceInfoDateTime = DateTime.Now.AddDays(-inputOfDays);
+            fileNamesToDelete = new List<string>();
+            fileNamesToEdit = new List<string>();
+        }
+    }
 }
