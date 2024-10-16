@@ -55,7 +55,11 @@
           "dependencies": {
             "Skyline.DataMiner.Dev.Automation": {
               "target": "Package",
-              "version": "[10.2.0.25, )"
+              "version": "[10.3.10, )"
+            },
+            "Skyline.DataMiner.Utils.ScriptPerformanceLogger": {
+              "target": "Package",
+              "version": "[3.0.1-prerelease12, )"
             },
             "StyleCop.Analyzers": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
