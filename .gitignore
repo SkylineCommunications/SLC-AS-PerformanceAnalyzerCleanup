@@ -13,3 +13,5 @@
 /.vs/ProjectEvaluation/performanceloggercleanupscript.projects.v8.bin
 /PerformanceLoggerCleanupScript_1/obj/Debug/net48/PerformanceLoggerCleanupScript_1.AssemblyInfo.cs
 /PerformanceLoggerCleanupScript_1/obj/Debug/net48/PerformanceLoggerCleanupScript_1.AssemblyInfoInputs.cache
+
+*.vsidx

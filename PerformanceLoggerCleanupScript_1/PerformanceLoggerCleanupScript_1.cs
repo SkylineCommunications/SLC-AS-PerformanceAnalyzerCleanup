@@ -65,8 +65,7 @@ namespace PerformanceLoggerCleanupScript_1
     {
         private readonly string folderPath = @"C:\Skyline_Data\PerformanceLogger";
         private DateTime oldestPerformanceInfoDateTime;
-        private List<string> fileNamesToDelete;
-        private List<string> fileNamesToEdit;
+        private HashSet<string> fileNamesToDelete;
 
         /// <summary>
         /// The script entry point.
@@ -78,9 +77,17 @@ namespace PerformanceLoggerCleanupScript_1
             {
                 RunSafe(engine);
             }
-            catch (Exception e)
+            catch (DirectoryNotFoundException ex)
             {
-                engine.ExitFail("Run|Something went wrong: " + e);
+                engine.ExitFail("Run|Directory not found: " + ex.Message);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                engine.ExitFail("Run|Access denied: " + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                engine.ExitFail("Run|Something went wrong: " + ex.Message);
             }
         }
 
@@ -91,13 +98,11 @@ namespace PerformanceLoggerCleanupScript_1
             if (!Directory.Exists(folderPath))
                 return;
 
-            DetermineFilesToDeleteOrEdit();
-            engine.Log($"Files to delete {String.Join(", ", fileNamesToDelete)}");
-            engine.Log($"Files to modify {String.Join(", ", fileNamesToEdit)}");
-            HandleFilesToEditOrDelete();
+            DetermineFilesToDelete();
+            DeleteFiles();
         }
 
-        private void HandleFilesToEditOrDelete()
+        private void DeleteFiles()
         {
             foreach (string fileName in fileNamesToDelete)
             {
@@ -105,7 +110,7 @@ namespace PerformanceLoggerCleanupScript_1
             }
         }
 
-        private void DetermineFilesToDeleteOrEdit()
+        private void DetermineFilesToDelete()
         {
             string[] files = Directory.GetFiles(folderPath);
 
@@ -115,23 +120,20 @@ namespace PerformanceLoggerCleanupScript_1
                 {
                     fileNamesToDelete.Add(file);
                 }
-                else if (File.GetCreationTime(file) < oldestPerformanceInfoDateTime)
-                {
-                    fileNamesToEdit.Add(file);
-                }
-                else
-                {
-                    // do nothing
-                }
             }
         }
 
         private void Initialize(IEngine engine)
         {
-            var inputOfDays = Convert.ToInt32(engine.GetScriptParam("Days of oldest performance info").Value);
-            oldestPerformanceInfoDateTime = DateTime.Now.AddDays(-inputOfDays);
-            fileNamesToDelete = new List<string>();
-            fileNamesToEdit = new List<string>();
+            var inputOfDays = engine.GetScriptParam("Days of oldest performance info")?.Value;
+
+            if (!int.TryParse(inputOfDays, out int days))
+            {
+                throw new ArgumentException("Invalid value for Days of oldest performance info. It must be an integer.");
+            }
+
+            oldestPerformanceInfoDateTime = DateTime.Now.AddDays(-days);
+            fileNamesToDelete = new HashSet<string>();
         }
     }
 }
