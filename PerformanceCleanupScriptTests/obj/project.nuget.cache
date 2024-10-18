@@ -1,0 +1,38 @@
+{
+  "version": 2,
+  "dgSpecHash": "srfwpzH/Lw0=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\rijadco\\source\\repos\\SLC-AS-PerformanceLoggerCleanupScript\\PerformanceCleanupScriptTests\\PerformanceCleanupScriptTests.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\rijadco\\.nuget\\packages\\castle.core\\5.1.1\\castle.core.5.1.1.nupkg.sha512",
+    "C:\\Users\\rijadco\\.nuget\\packages\\coverlet.collector\\6.0.0\\coverlet.collector.6.0.0.nupkg.sha512",
+    "C:\\Users\\rijadco\\.nuget\\packages\\microsoft.codecoverage\\17.8.0\\microsoft.codecoverage.17.8.0.nupkg.sha512",
+    "C:\\Users\\rijadco\\.nuget\\packages\\microsoft.net.test.sdk\\17.8.0\\microsoft.net.test.sdk.17.8.0.nupkg.sha512",
+    "C:\\Users\\rijadco\\.nuget\\packages\\moq\\4.20.70\\moq.4.20.70.nupkg.sha512",
+    "C:\\Users\\rijadco\\.nuget\\packages\\mstest.testadapter\\3.1.1\\mstest.testadapter.3.1.1.nupkg.sha512",
+    "C:\\Users\\rijadco\\.nuget\\packages\\mstest.testframework\\3.1.1\\mstest.testframework.3.1.1.nupkg.sha512",
+    "C:\\Users\\rijadco\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
+    "C:\\Users\\rijadco\\.nuget\\packages\\sharpziplib\\1.3.3\\sharpziplib.1.3.3.nupkg.sha512",
+    "C:\\Users\\rijadco\\.nuget\\packages\\skyline.dataminer.dev.automation\\10.3.10\\skyline.dataminer.dev.automation.10.3.10.nupkg.sha512",
+    "C:\\Users\\rijadco\\.nuget\\packages\\skyline.dataminer.dev.common\\10.3.10\\skyline.dataminer.dev.common.10.3.10.nupkg.sha512",
+    "C:\\Users\\rijadco\\.nuget\\packages\\skyline.dataminer.files.protobufnet\\10.3.10\\skyline.dataminer.files.protobufnet.10.3.10.nupkg.sha512",
+    "C:\\Users\\rijadco\\.nuget\\packages\\skyline.dataminer.files.skyline.dataminer.storage.types\\10.3.10\\skyline.dataminer.files.skyline.dataminer.storage.types.10.3.10.nupkg.sha512",
+    "C:\\Users\\rijadco\\.nuget\\packages\\skyline.dataminer.files.slanalyticstypes\\10.3.10\\skyline.dataminer.files.slanalyticstypes.10.3.10.nupkg.sha512",
+    "C:\\Users\\rijadco\\.nuget\\packages\\skyline.dataminer.files.slloggerutil\\10.3.10\\skyline.dataminer.files.slloggerutil.10.3.10.nupkg.sha512",
+    "C:\\Users\\rijadco\\.nuget\\packages\\skyline.dataminer.files.slmanagedautomation\\10.3.10\\skyline.dataminer.files.slmanagedautomation.10.3.10.nupkg.sha512",
+    "C:\\Users\\rijadco\\.nuget\\packages\\skyline.dataminer.files.slnettypes\\10.3.10\\skyline.dataminer.files.slnettypes.10.3.10.nupkg.sha512",
+    "C:\\Users\\rijadco\\.nuget\\packages\\skyline.dataminer.files.slprotobuflibrary\\10.3.10\\skyline.dataminer.files.slprotobuflibrary.10.3.10.nupkg.sha512",
+    "C:\\Users\\rijadco\\.nuget\\packages\\skyline.dataminer.utils.scriptperformancelogger\\3.0.1-prerelease12\\skyline.dataminer.utils.scriptperformancelogger.3.0.1-prerelease12.nupkg.sha512",
+    "C:\\Users\\rijadco\\.nuget\\packages\\stylecop.analyzers\\1.1.118\\stylecop.analyzers.1.1.118.nupkg.sha512",
+    "C:\\Users\\rijadco\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\4.5.3\\system.runtime.compilerservices.unsafe.4.5.3.nupkg.sha512",
+    "C:\\Users\\rijadco\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.4\\system.threading.tasks.extensions.4.5.4.nupkg.sha512"
+  ],
+  "logs": [
+    {
+      "code": "NU1803",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "You are running the 'restore' operation with an 'HTTP' source, 'http://devcore3:81/nuget'. Non-HTTPS access will be removed in a future version. Consider migrating to an 'HTTPS' source."
+    }
+  ]
+}

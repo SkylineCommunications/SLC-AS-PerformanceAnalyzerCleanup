@@ -53,9 +53,7 @@ namespace PerformanceLoggerCleanupScript_1
 {
     using System;
     using System.Collections.Generic;
-    using System.Globalization;
     using System.IO;
-    using System.Text;
     using Skyline.DataMiner.Automation;
 
     /// <summary>
@@ -91,22 +89,52 @@ namespace PerformanceLoggerCleanupScript_1
             }
         }
 
+        public void Initialize(IEngine engine)
+        {
+            var inputOfDays = engine.GetScriptParam("Days of oldest performance info")?.Value;
+
+            if (string.IsNullOrEmpty(inputOfDays) || !int.TryParse(inputOfDays, out int days))
+            {
+                throw new ArgumentException("Invalid or missing value for Days of oldest performance info. It must be a valid integer.");
+            }
+
+            oldestPerformanceInfoDateTime = DateTime.Now.AddDays(-days);
+            fileNamesToDelete = new HashSet<string>();
+        }
+
         private void RunSafe(IEngine engine)
         {
             Initialize(engine);
 
             if (!Directory.Exists(folderPath))
-                return;
+            {
+                throw new DirectoryNotFoundException("The directory does not exist.");
+            }
 
             DetermineFilesToDelete();
-            DeleteFiles();
+            DeleteFiles(engine);
         }
 
-        private void DeleteFiles()
+        private void DeleteFiles(IEngine engine)
         {
             foreach (string fileName in fileNamesToDelete)
             {
-                File.Delete(fileName);
+                try
+                {
+                    File.Delete(fileName);
+                }
+                catch (UnauthorizedAccessException ex)
+                {
+                    engine.ExitFail($"Failed to delete file (Access Denied): {fileName} - {ex.Message}");
+                }
+                catch (IOException ex)
+                {
+                    engine.ExitFail($"Failed to delete file (File in use or I/O error): {fileName} - {ex.Message}");
+                }
+                catch (Exception ex)
+                {
+                    engine.ExitFail($"Failed to delete file (Unknown error): {fileName} - {ex.Message}");
+                }
             }
         }
 
@@ -121,19 +149,6 @@ namespace PerformanceLoggerCleanupScript_1
                     fileNamesToDelete.Add(file);
                 }
             }
-        }
-
-        private void Initialize(IEngine engine)
-        {
-            var inputOfDays = engine.GetScriptParam("Days of oldest performance info")?.Value;
-
-            if (!int.TryParse(inputOfDays, out int days))
-            {
-                throw new ArgumentException("Invalid value for Days of oldest performance info. It must be an integer.");
-            }
-
-            oldestPerformanceInfoDateTime = DateTime.Now.AddDays(-days);
-            fileNamesToDelete = new HashSet<string>();
         }
     }
 }
