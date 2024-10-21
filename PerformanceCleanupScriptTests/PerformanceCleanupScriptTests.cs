@@ -5,13 +5,18 @@
 	using Moq;
 	using Skyline.DataMiner.Automation;
 
+	/// <summary>
+	/// Tests for Performance Cleanup Script.
+	/// </summary>
 	[TestClass]
 	public class PerformanceCleanupScriptTests
 	{
-		private const string TestFolderPath = @"C:\Skyline_Data\PerformanceLogger"; // Ensure this path is suitable for testing.
 		private Mock<IEngine> mockEngine;
 		private Script script;
 
+		/// <summary>
+		/// Test setup.
+		/// </summary>
 		[TestInitialize]
 		public void Setup()
 		{
@@ -19,17 +24,24 @@
 			this.script = new Script();
 		}
 
+		/// <summary>
+		/// Verifies that the script exits with an error message when the specified folder does not exist.
+		/// </summary>
 		[TestMethod]
 		public void Run_DirectoryNotFound_ExitsWithMessage()
 		{
-			var mockScriptParam = new Mock<ScriptParam>();
-			mockScriptParam.Setup(sp => sp.Value).Returns("7");
+			var mockDaysParam = new Mock<ScriptParam>();
+			mockDaysParam.Setup(sp => sp.Value).Returns("7");
+			this.mockEngine.Setup(e => e.GetScriptParam("Days of oldest performance info")).Returns(mockDaysParam.Object);
 
-			this.mockEngine.Setup(e => e.GetScriptParam(It.IsAny<string>())).Returns(mockScriptParam.Object);
+			var mockFolderParam = new Mock<ScriptParam>();
+			string nonExistingFolderPath = "C:\\Skyline_Data\\NonExistingFolder";
+			mockFolderParam.Setup(sp => sp.Value).Returns(nonExistingFolderPath);
+			this.mockEngine.Setup(e => e.GetScriptParam("Folder path to performance info")).Returns(mockFolderParam.Object);
 
-			if (Directory.Exists(TestFolderPath))
+			if (Directory.Exists(nonExistingFolderPath))
 			{
-				Directory.Delete(TestFolderPath, true);
+				Directory.Delete(nonExistingFolderPath, true);
 			}
 
 			this.script.Run(this.mockEngine.Object);
@@ -37,6 +49,27 @@
 			this.mockEngine.Verify(e => e.ExitFail(It.Is<string>(s => s.Contains("Directory not found"))), Times.Once);
 		}
 
+		/// <summary>
+		/// Ensures that the script exits with an error message when an unexpected exception occurs.
+		/// </summary>
+		[TestMethod]
+		public void Run_UnexpectedException_ExitsWithMessage()
+		{
+			var mockScriptParam = new Mock<ScriptParam>();
+			mockScriptParam.Setup(sp => sp.Value).Returns("7");
+
+			this.mockEngine.Setup(e => e.GetScriptParam(It.IsAny<string>())).Returns(mockScriptParam.Object);
+			this.script.Initialize(this.mockEngine.Object); // Ensure initialization occurs
+
+			this.mockEngine.Setup(e => e.GetScriptParam(It.IsAny<string>())).Throws(new Exception("Simulated unexpected error."));
+			this.script.Run(this.mockEngine.Object);
+
+			this.mockEngine.Verify(e => e.ExitFail(It.Is<string>(s => s.Contains("Something went wrong"))), Times.Once);
+		}
+
+		/// <summary>
+		/// Checks that the script exits with an error message when access to the folder is denied.
+		/// </summary>
 		[TestMethod]
 		public void Run_AccessDenied_ExitsWithMessage()
 		{
@@ -46,31 +79,61 @@
 			this.mockEngine.Setup(e => e.GetScriptParam(It.IsAny<string>())).Throws(new UnauthorizedAccessException("Simulated access denied error."));
 			this.script.Run(this.mockEngine.Object);
 
-			mockEngine.Verify(e => e.ExitFail(It.Is<string>(s => s.Contains("Access denied"))), Times.Once);
+			this.mockEngine.Verify(e => e.ExitFail(It.Is<string>(s => s.Contains("Access denied"))), Times.Once);
 		}
 
+		/// <summary>
+		/// Validates that the script deletes old files while keeping recent ones when run with valid parameters.
+		/// </summary>
 		[TestMethod]
 		public void Run_ValidParameters_DeletesOldFiles()
 		{
-			var mockScriptParam = new Mock<ScriptParam>();
-			mockScriptParam.Setup(sp => sp.Value).Returns("7");
-			this.mockEngine.Setup(e => e.GetScriptParam("Days of oldest performance info")).Returns(mockScriptParam.Object);
+			var mockDaysParam = new Mock<ScriptParam>();
+			mockDaysParam.Setup(sp => sp.Value).Returns("7");
+			this.mockEngine.Setup(e => e.GetScriptParam("Days of oldest performance info")).Returns(mockDaysParam.Object);
 
-			Directory.CreateDirectory(TestFolderPath);
-			File.WriteAllText(Path.Combine(TestFolderPath, "oldFile.txt"), "test content");
-			File.SetLastWriteTime(Path.Combine(TestFolderPath, "oldFile.txt"), DateTime.Now.AddDays(-10));
+			var mockFolderParam = new Mock<ScriptParam>();
+			string folderPath = "C:\\Skyline_Data\\PerformanceLogger"; // Define your actual folder path here
+			mockFolderParam.Setup(sp => sp.Value).Returns(folderPath);
+			this.mockEngine.Setup(e => e.GetScriptParam("Folder path to performance info")).Returns(mockFolderParam.Object);
 
-			File.WriteAllText(Path.Combine(TestFolderPath, "newFile.txt"), "test content");
-			File.SetLastWriteTime(Path.Combine(TestFolderPath, "newFile.txt"), DateTime.Now);
+			Directory.CreateDirectory(folderPath);
+
+			using (var stream = File.CreateText(Path.Combine(folderPath, "oldFile.txt")))
+			{
+				stream.Write("test content");
+			}
+
+			File.SetLastWriteTime(Path.Combine(folderPath, "oldFile.txt"), DateTime.Now.AddDays(-10));
+
+			using (var stream = File.CreateText(Path.Combine(folderPath, "newFile.txt")))
+			{
+				stream.Write("test content");
+			}
+
+			File.SetLastWriteTime(Path.Combine(folderPath, "newFile.txt"), DateTime.Now);
 
 			this.script.Run(this.mockEngine.Object);
 
-			Assert.IsFalse(File.Exists(Path.Combine(TestFolderPath, "oldFile.txt")), "Old file should be deleted.");
-			Assert.IsTrue(File.Exists(Path.Combine(TestFolderPath, "newFile.txt")), "New file should still exist.");
+			Assert.IsFalse(File.Exists(Path.Combine(folderPath, "oldFile.txt")), "Old file should be deleted.");
+			Assert.IsTrue(File.Exists(Path.Combine(folderPath, "newFile.txt")), "New file should still exist.");
 
-			Directory.Delete(TestFolderPath, true);
+			var files = Directory.GetFiles(folderPath);
+			foreach (var file in files)
+			{
+				var fileInfo = new FileInfo(file)
+				{
+					IsReadOnly = false,
+				};
+				fileInfo.Delete();
+			}
+
+			Directory.Delete(folderPath, true);
 		}
 
+		/// <summary>
+		/// Confirms that an ArgumentException is thrown when an invalid days parameter is provided.
+		/// </summary>
 		[TestMethod]
 		public void Initialize_InvalidDaysParameter_ThrowsArgumentException()
 		{

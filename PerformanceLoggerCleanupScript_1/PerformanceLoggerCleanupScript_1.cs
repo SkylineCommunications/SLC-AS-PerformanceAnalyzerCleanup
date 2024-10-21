@@ -61,7 +61,7 @@ namespace PerformanceLoggerCleanupScript_1
     /// </summary>
     public class Script
     {
-        private readonly string folderPath = @"C:\Skyline_Data\PerformanceLogger";
+        private string folderPath;
         private DateTime oldestPerformanceInfoDateTime;
         private HashSet<string> fileNamesToDelete;
 
@@ -77,29 +77,73 @@ namespace PerformanceLoggerCleanupScript_1
             }
             catch (DirectoryNotFoundException ex)
             {
-                engine.ExitFail("Run|Directory not found: " + ex.Message);
+                engine.ExitFail("Directory not found: " + ex.Message);
             }
             catch (UnauthorizedAccessException ex)
             {
-                engine.ExitFail("Run|Access denied: " + ex.Message);
+                engine.ExitFail("Access denied: " + ex.Message);
             }
             catch (Exception ex)
             {
-                engine.ExitFail("Run|Something went wrong: " + ex.Message);
+                engine.ExitFail("Something went wrong: " + ex.Message);
             }
         }
 
         public void Initialize(IEngine engine)
         {
-            var inputOfDays = engine.GetScriptParam("Days of oldest performance info")?.Value;
+            folderPath = GetFolderPath(engine);
+            oldestPerformanceInfoDateTime = GetOldestPerformanceDate(engine);
+            fileNamesToDelete = new HashSet<string>();
+        }
 
+        private static DateTime GetOldestPerformanceDate(IEngine engine)
+        {
+            var inputOfDays = engine.GetScriptParam("Days of oldest performance info")?.Value;
             if (string.IsNullOrEmpty(inputOfDays) || !int.TryParse(inputOfDays, out int days))
             {
                 throw new ArgumentException("Invalid or missing value for Days of oldest performance info. It must be a valid integer.");
             }
 
-            oldestPerformanceInfoDateTime = DateTime.Now.AddDays(-days);
-            fileNamesToDelete = new HashSet<string>();
+            return DateTime.Now.AddDays(-days);
+        }
+
+        private static string GetFolderPath(IEngine engine)
+        {
+            var inputOfFolderPath = Convert.ToString(engine.GetScriptParam("Folder path to performance info")?.Value);
+            if (string.IsNullOrEmpty(inputOfFolderPath))
+            {
+                throw new ArgumentException("Missing value for Folder path to performance info.");
+            }
+
+            return inputOfFolderPath.Trim();
+        }
+
+        private static void TryDeleteFile(IEngine engine, string fileName)
+        {
+            try
+            {
+                File.Delete(fileName);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                engine.ExitFail($"Unauthorized Access | Failed to delete file: {fileName} - {ex.Message}");
+            }
+            catch (IOException ex)
+            {
+                engine.ExitFail($"IO Exception | Failed to delete file: {fileName} - {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                engine.ExitFail($"Exception | Failed to delete file: {fileName} - {ex.Message}");
+            }
+        }
+
+        private void DeleteFiles(IEngine engine)
+        {
+            foreach (string fileName in fileNamesToDelete)
+            {
+                TryDeleteFile(engine, fileName);
+            }
         }
 
         private void RunSafe(IEngine engine)
@@ -113,29 +157,6 @@ namespace PerformanceLoggerCleanupScript_1
 
             DetermineFilesToDelete();
             DeleteFiles(engine);
-        }
-
-        private void DeleteFiles(IEngine engine)
-        {
-            foreach (string fileName in fileNamesToDelete)
-            {
-                try
-                {
-                    File.Delete(fileName);
-                }
-                catch (UnauthorizedAccessException ex)
-                {
-                    engine.ExitFail($"Failed to delete file (Access Denied): {fileName} - {ex.Message}");
-                }
-                catch (IOException ex)
-                {
-                    engine.ExitFail($"Failed to delete file (File in use or I/O error): {fileName} - {ex.Message}");
-                }
-                catch (Exception ex)
-                {
-                    engine.ExitFail($"Failed to delete file (Unknown error): {fileName} - {ex.Message}");
-                }
-            }
         }
 
         private void DetermineFilesToDelete()
