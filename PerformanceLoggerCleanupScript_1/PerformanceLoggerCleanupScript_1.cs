@@ -91,8 +91,8 @@ namespace PerformanceLoggerCleanupScript_1
 
         public void Initialize(IEngine engine)
         {
-            folderPath = GetFolderPath(engine);
             oldestPerformanceInfoDateTime = GetOldestPerformanceDate(engine);
+            folderPath = GetFolderPath(engine);
             fileNamesToDelete = new HashSet<string>();
         }
 
