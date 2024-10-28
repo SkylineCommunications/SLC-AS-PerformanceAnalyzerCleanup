@@ -32,12 +32,12 @@
 		{
 			var mockDaysParam = new Mock<ScriptParam>();
 			mockDaysParam.Setup(sp => sp.Value).Returns("7");
-			this.mockEngine.Setup(e => e.GetScriptParam("Days of oldest performance info")).Returns(mockDaysParam.Object);
+			this.mockEngine.Setup(e => e.GetScriptParam(2)).Returns(mockDaysParam.Object);
 
 			var mockFolderParam = new Mock<ScriptParam>();
 			string nonExistingFolderPath = "C:\\Skyline_Data\\NonExistingFolder";
 			mockFolderParam.Setup(sp => sp.Value).Returns(nonExistingFolderPath);
-			this.mockEngine.Setup(e => e.GetScriptParam("Folder path to performance info")).Returns(mockFolderParam.Object);
+			this.mockEngine.Setup(e => e.GetScriptParam(3)).Returns(mockFolderParam.Object);
 
 			if (Directory.Exists(nonExistingFolderPath))
 			{
@@ -57,12 +57,12 @@
 		{
 			var mockDaysParam = new Mock<ScriptParam>();
 			mockDaysParam.Setup(sp => sp.Value).Returns("7");
-			this.mockEngine.Setup(e => e.GetScriptParam("Days of oldest performance info")).Returns(mockDaysParam.Object);
+			this.mockEngine.Setup(e => e.GetScriptParam(2)).Returns(mockDaysParam.Object);
 
 			var mockFolderParam = new Mock<ScriptParam>();
 			string folderPath = "C:\\Skyline_Data\\PerformanceLogger"; // Define your actual folder path here
 			mockFolderParam.Setup(sp => sp.Value).Returns(folderPath);
-			this.mockEngine.Setup(e => e.GetScriptParam("Folder path to performance info")).Returns(mockFolderParam.Object);
+			this.mockEngine.Setup(e => e.GetScriptParam(3)).Returns(mockFolderParam.Object);
 
 			Directory.CreateDirectory(folderPath);
 
