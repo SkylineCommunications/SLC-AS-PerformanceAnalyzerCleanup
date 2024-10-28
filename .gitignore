@@ -5,6 +5,7 @@ packages/*
 **/.svn
 _git2_*
 **/StyleCop.Cache
+**/Debug/net48/*
 # solution user option files
 *.suo
 # Word owner file (opened document)
@@ -14,4 +15,9 @@ _git2_*
 # resharper solution user settings
 *sln.DotSettings.user
 *.dtbcache.json
+
+*.dll
 *.pdb
+
+*.sourcelink.json
+*.AssemblyInfo.cs

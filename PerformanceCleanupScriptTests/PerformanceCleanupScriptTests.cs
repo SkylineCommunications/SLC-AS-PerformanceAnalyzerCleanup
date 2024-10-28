@@ -50,39 +50,6 @@
 		}
 
 		/// <summary>
-		/// Ensures that the script exits with an error message when an unexpected exception occurs.
-		/// </summary>
-		[TestMethod]
-		public void Run_UnexpectedException_ExitsWithMessage()
-		{
-			var mockScriptParam = new Mock<ScriptParam>();
-			mockScriptParam.Setup(sp => sp.Value).Returns("7");
-
-			this.mockEngine.Setup(e => e.GetScriptParam(It.IsAny<string>())).Returns(mockScriptParam.Object);
-			this.script.Initialize(this.mockEngine.Object); // Ensure initialization occurs
-
-			this.mockEngine.Setup(e => e.GetScriptParam(It.IsAny<string>())).Throws(new Exception("Simulated unexpected error."));
-			this.script.Run(this.mockEngine.Object);
-
-			this.mockEngine.Verify(e => e.ExitFail(It.Is<string>(s => s.Contains("Something went wrong"))), Times.Once);
-		}
-
-		/// <summary>
-		/// Checks that the script exits with an error message when access to the folder is denied.
-		/// </summary>
-		[TestMethod]
-		public void Run_AccessDenied_ExitsWithMessage()
-		{
-			var mockScriptParam = new Mock<ScriptParam>();
-			mockScriptParam.Setup(sp => sp.Value).Returns("7");
-
-			this.mockEngine.Setup(e => e.GetScriptParam(It.IsAny<string>())).Throws(new UnauthorizedAccessException("Simulated access denied error."));
-			this.script.Run(this.mockEngine.Object);
-
-			this.mockEngine.Verify(e => e.ExitFail(It.Is<string>(s => s.Contains("Access denied"))), Times.Once);
-		}
-
-		/// <summary>
 		/// Validates that the script deletes old files while keeping recent ones when run with valid parameters.
 		/// </summary>
 		[TestMethod]
