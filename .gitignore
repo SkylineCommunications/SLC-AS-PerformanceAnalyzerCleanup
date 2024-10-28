@@ -1,24 +1,24 @@
-﻿**/bin/*
-**/obj/*
-.vs/*
-packages/*
-**/.svn
-_git2_*
+﻿
+**/bin/
+**/obj/
+.vs/
+packages/
+
 **/StyleCop.Cache
-**/Debug/net48/*
-# solution user option files
+
+**/Debug/net48/
+
+**/*.dll
+**/*.pdb
+**/*.sourcelink.json
+**/*.AssemblyInfo.cs
+
+_git2_*
+**/.svn
+
 *.suo
-# Word owner file (opened document)
-**/~$*.docx
-# visual studio project user setting
 **/*.csproj.user
-# resharper solution user settings
 *sln.DotSettings.user
 *.dtbcache.json
 
-*.dll
-*.pdb
-*.v2
-
-*.sourcelink.json
-*.AssemblyInfo.cs
+**/~$*.docx
