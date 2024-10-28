@@ -44,7 +44,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Actions", "Actions", "{1B2C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PerformanceLoggerCleanupScript_1", "PerformanceLoggerCleanupScript_1\PerformanceLoggerCleanupScript_1.csproj", "{6E1354D7-0B40-48AE-9041-9CC8E2E18CF1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PerformanceCleanupScriptTests", "PerformanceCleanupScriptTests\PerformanceCleanupScriptTests.csproj", "{9F06D1CD-7BB5-4966-A761-07CE43F4220D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PerformanceCleanupScriptTests", "PerformanceCleanupScriptTests\PerformanceCleanupScriptTests.csproj", "{9F06D1CD-7BB5-4966-A761-07CE43F4220D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
