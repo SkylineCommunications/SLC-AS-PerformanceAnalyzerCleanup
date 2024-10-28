@@ -1,17 +1,17 @@
-﻿################################################################################
-# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
-################################################################################
-
-/PerformanceLoggerCleanupScript/.vs/PerformanceLoggerCleanupScript/FileContentIndex/19cb28d7-b138-421e-bc73-92868d781216.vsidx
-/.vs/PerformanceLoggerCleanupScript/FileContentIndex/84063d02-be44-4065-acab-c746b5fbcb55.vsidx
-/.vs/PerformanceLoggerCleanupScript/v17/DocumentLayout.json
-/.vs/PerformanceLoggerCleanupScript/v17/.suo
-/.vs/PerformanceLoggerCleanupScript/DesignTimeBuild/.dtbcache.v2
-/.vs/PerformanceLoggerCleanupScript/FileContentIndex/52ea2ffb-a88d-413c-adfd-25831a9795c2.vsidx
-/.vs/ProjectEvaluation/performanceloggercleanupscript.metadata.v8.bin
-/.vs/PerformanceLoggerCleanupScript/FileContentIndex/cece1cff-16fb-4890-91ed-1060957b37b0.vsidx
-/.vs/ProjectEvaluation/performanceloggercleanupscript.projects.v8.bin
-/PerformanceLoggerCleanupScript_1/obj/Debug/net48/PerformanceLoggerCleanupScript_1.AssemblyInfo.cs
-/PerformanceLoggerCleanupScript_1/obj/Debug/net48/PerformanceLoggerCleanupScript_1.AssemblyInfoInputs.cache
-
-*.vsidx
+﻿**/bin/*
+**/obj/*
+.vs/*
+packages/*
+**/.svn
+_git2_*
+**/StyleCop.Cache
+# solution user option files
+*.suo
+# Word owner file (opened document)
+**/~$*.docx
+# visual studio project user setting
+**/*.csproj.user
+# resharper solution user settings
+*sln.DotSettings.user
+*.dtbcache.json
+*.pdb

@@ -98,7 +98,7 @@ namespace PerformanceLoggerCleanupScript_1
 
         private static DateTime GetOldestPerformanceDate(IEngine engine)
         {
-            var inputOfDays = engine.GetScriptParam("Days of oldest performance info")?.Value;
+            var inputOfDays = engine.GetScriptParam(2)?.Value;
             if (string.IsNullOrEmpty(inputOfDays) || !int.TryParse(inputOfDays, out int days))
             {
                 throw new ArgumentException("Invalid or missing value for Days of oldest performance info. It must be a valid integer.");
@@ -109,7 +109,7 @@ namespace PerformanceLoggerCleanupScript_1
 
         private static string GetFolderPath(IEngine engine)
         {
-            var inputOfFolderPath = Convert.ToString(engine.GetScriptParam("Folder path to performance info")?.Value);
+            var inputOfFolderPath = Convert.ToString(engine.GetScriptParam(3)?.Value);
             if (string.IsNullOrEmpty(inputOfFolderPath))
             {
                 throw new ArgumentException("Missing value for Folder path to performance info.");

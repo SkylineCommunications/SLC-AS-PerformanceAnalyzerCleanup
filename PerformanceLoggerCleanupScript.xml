@@ -15,10 +15,10 @@
 
 	<Parameters>
 		<ScriptParameter id="2" type="string" values="">
-			<Description>Days of oldest performance info</Description>
+			<Description>Older than (in days):</Description>
 		</ScriptParameter>
 		<ScriptParameter id="3" type="string" values="">
-			<Description>Folder path to performance info</Description>
+			<Description>Folder path:</Description>
 		</ScriptParameter>
 	</Parameters>
 
