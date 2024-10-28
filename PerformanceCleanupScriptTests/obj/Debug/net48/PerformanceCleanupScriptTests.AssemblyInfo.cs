@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PerformanceCleanupScriptTests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9913012c3f670c6d1d8823ad99591aa39ed38479")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6fbe9c6709e8533df19d0a5c9d8e720cbed34a62")]
 [assembly: System.Reflection.AssemblyProductAttribute("PerformanceCleanupScriptTests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PerformanceCleanupScriptTests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
