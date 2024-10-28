@@ -22,3 +22,4 @@ _git2_*
 *.dtbcache.json
 
 **/~$*.docx
+**/*.v2
