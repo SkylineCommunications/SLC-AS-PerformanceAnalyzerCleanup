@@ -1,25 +1,17 @@
-﻿
-**/bin/
-**/obj/
-.vs/
-packages/
-
-**/StyleCop.Cache
-
-**/Debug/net48/
-
-**/*.dll
-**/*.pdb
-**/*.sourcelink.json
-**/*.AssemblyInfo.cs
-
-_git2_*
+**/bin/*
+**/obj/*
+.vs/*
+packages/*
 **/.svn
-
+_git2_*
+**/StyleCop.Cache
+# solution user option files
 *.suo
-**/*.csproj.user
-*sln.DotSettings.user
-*.dtbcache.json
-
-**/~$*.docx
-**/*.v2
+# protocol checklist template
+**/*.dotx
+# Temporary MS Office file (opened document)
+~$*
+# user settings
+**.user
+# NuGet migration
+MigrationBackup/*
