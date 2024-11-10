@@ -35,16 +35,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Code Analysis", "Code Analy
 		Internal\Code Analysis\stylecop.json = Internal\Code Analysis\stylecop.json
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PerformanceLoggerCleanupScript", "PerformanceLoggerCleanupScript", "{0C2EA8B1-0746-49DA-BA3A-73DFAA52FBB0}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PerformanceAnalyzerCleanup", "PerformanceAnalyzerCleanup", "{0C2EA8B1-0746-49DA-BA3A-73DFAA52FBB0}"
 	ProjectSection(SolutionItems) = preProject
-		PerformanceLoggerCleanupScript.xml = PerformanceLoggerCleanupScript.xml
+		PerformanceAnalyzerCleanup.xml = PerformanceAnalyzerCleanup.xml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Actions", "Actions", "{1B2C706F-83A6-4229-9738-E51BB2BF3BD3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PerformanceLoggerCleanupScript_1", "PerformanceLoggerCleanupScript_1\PerformanceLoggerCleanupScript_1.csproj", "{6E1354D7-0B40-48AE-9041-9CC8E2E18CF1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PerformanceAnalyzerCleanup", "PerformanceAnalyzerCleanup\PerformanceAnalyzerCleanup.csproj", "{6E1354D7-0B40-48AE-9041-9CC8E2E18CF1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PerformanceCleanupScriptTests", "PerformanceCleanupScriptTests\PerformanceCleanupScriptTests.csproj", "{9F06D1CD-7BB5-4966-A761-07CE43F4220D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PerformanceAnalyzerCleanupTests", "PerformanceAnalyzerCleanupTests\PerformanceAnalyzerCleanupTests.csproj", "{9F06D1CD-7BB5-4966-A761-07CE43F4220D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

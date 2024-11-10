@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <DMSScript options="272" xmlns="http://www.skyline.be/automation">
-	<Name>PerformanceLoggerCleanupScript</Name>
+	<Name>Performance Analyzer Cleanup</Name>
 	<Description></Description>
 	<Type>Automation</Type>
-	<Author>SKYLINE2\RCO</Author>
+	<Author>Skyline Communications</Author>
 	<CheckSets>FALSE</CheckSets>
-	<Folder></Folder>
+	<Folder>Performance Analyzer</Folder>
 
 	<Protocols>
 	</Protocols>
@@ -15,18 +15,16 @@
 
 	<Parameters>
 		<ScriptParameter id="2" type="string" values="">
-			<Description>Older than (in days):</Description>
+			<Description>Max Days Since Last Modified</Description>
 		</ScriptParameter>
 		<ScriptParameter id="3" type="string" values="">
-			<Description>Folder path:</Description>
+			<Description>Performance Metrics Location</Description>
 		</ScriptParameter>
 	</Parameters>
 
 	<Script>
 		<Exe id="1" type="csharp">
-			<Value><![CDATA[[Project:PerformanceLoggerCleanupScript_1]]]></Value>
-			<!--<Param type="debug">true</Param>-->
-			<Message></Message>
+			<Value><![CDATA[[Project:PerformanceAnalyzerCleanup]]]></Value>
 		</Exe>
 	</Script>
 </DMSScript>
