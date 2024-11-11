@@ -1,4 +1,4 @@
-namespace Skyline.DataMiner.Utilities.PerformanceAnalyzerCleanup
+namespace Skyline.DataMiner.Utils.PerformanceAnalyzerCleanup
 {
 	using System;
 	using System.Collections.Generic;

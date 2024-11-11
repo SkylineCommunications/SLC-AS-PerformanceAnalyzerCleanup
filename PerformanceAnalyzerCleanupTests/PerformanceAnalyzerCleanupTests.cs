@@ -1,4 +1,4 @@
-﻿namespace Skyline.DataMiner.Utilities.PerformanceAnalyzerCleanupTests
+﻿namespace Skyline.DataMiner.Utils.PerformanceAnalyzerCleanupTests
 {
 	using System;
 	using System.IO;
@@ -8,7 +8,7 @@
 	using Moq;
 
 	using Skyline.DataMiner.Automation;
-	using Skyline.DataMiner.Utilities.PerformanceAnalyzerCleanup;
+	using Skyline.DataMiner.Utils.PerformanceAnalyzerCleanup;
 
 	[TestClass]
 	public class PerformanceAnalyzerCleanupTests
