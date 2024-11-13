@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "cRiSWAG5z/I=",
+  "dgSpecHash": "KLnaNAz2SAs=",
   "success": true,
-  "projectFilePath": "C:\\Users\\rijadco\\source\\repos\\SLC-AS-PerformanceLoggerCleanupScript\\PerformanceCleanupScriptTests\\PerformanceCleanupScriptTests.csproj",
+  "projectFilePath": "C:\\Users\\rijadco\\Source\\Repos\\SLC-AS-PerformanceAnalyzerCleanup\\PerformanceCleanupScriptTests\\PerformanceCleanupScriptTests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\rijadco\\.nuget\\packages\\castle.core\\5.1.1\\castle.core.5.1.1.nupkg.sha512",
     "C:\\Users\\rijadco\\.nuget\\packages\\coverlet.collector\\6.0.0\\coverlet.collector.6.0.0.nupkg.sha512",
