@@ -17,8 +17,8 @@
 		<DefineConstants>$(DefineConstants);DCFv1;DBInfo;ALARM_SQUASHING</DefineConstants>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="Skyline.DataMiner.Dev.Automation" Version="10.3.10" />
-		<PackageReference Include="Skyline.DataMiner.Utils.ScriptPerformanceLogger" Version="3.0.1-prerelease12" />
+		<PackageReference Include="Skyline.DataMiner.Dev.Automation" Version="10.2.4" />
+		<PackageReference Include="Skyline.DataMiner.Utils.ScriptPerformanceLogger" Version="3.0.1-prerelease22" />
 	</ItemGroup>
 	<ProjectExtensions>
 		<VisualStudio>
